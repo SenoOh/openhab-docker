@@ -1,0 +1,19 @@
+[Unit]
+Description=openHAB empowering the smart home
+Requires=docker.service
+After=docker.service
+
+[Service]
+# Change WorkingDirectory to suit your environment
+WorkingDirectory = /path/to/this/repository
+ExecStart=/path/to/this/repository/launch.sh start -p 80
+ExecStop=/path/to/this/repository/launch.sh stop
+
+# Change User
+User=openhab
+
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

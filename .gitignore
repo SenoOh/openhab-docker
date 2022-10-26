@@ -1,0 +1,6 @@
+userdata/*
+!userdata/.keep
+conf/*
+!conf/.keep
+addons/*
+!addons/.keep
