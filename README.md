@@ -2,6 +2,16 @@
 
 ## 使い方
 
+### インストール
+1. ダウンロード
+```bash
+$ git clone https://github.com/miyake13000/openhab-docker.git
+```
+2. コンテナイメージ作成
+```bash
+$ docker build -t openhab:3.3.0-custom openhab-docker
+```
+
 ### openHAB の管理
 #### スクリプトを用いる方法
 1. 起動

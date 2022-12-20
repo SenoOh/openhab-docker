@@ -4,12 +4,12 @@
 # 1. Docker is installed
 
 # default value
-DEFAULT_ATTACH_OPTION=d # {i|t|it|d}
+DEFAULT_ATTACH_OPTION=it # {i|t|it|d}
 DEFAULT_PORT=8080 # host port which container binds
-DEFAULT_COMMAND="gosu openhab tini -s ./start.sh" # command which execute in container
+DEFAULT_COMMAND="" # command which execute in container
 
 # constant value
-IMAGE_NAME=openhab/openhab:3.3.0
+IMAGE_NAME=openhab:3.3.0-cunstom
 CONTAINER_NAME=openhab
 SCRIPT_NAME=launch.sh
 
@@ -119,31 +119,26 @@ function start(){
         exit 1
     fi
 
-    echo "setting up $CONTAINER_NAME"
-    docker run \
-        -d \
-	-e USER_ID=$(id -u) \
-	-e GROUP_ID=$(id -g) \
-	-e OPENHAB_HTTP_PORT=$PORT \
-	-e OPENHAB_HTTPS_PORT=$(expr $PORT + 1) \
-	-v $(pwd)/addons:/openhab/addons \
-	-v $(pwd)/conf:/openhab/conf \
-	-v $(pwd)/userdata:/openhab/userdata \
-	-v /etc/localtime:/etc/localtime:ro \
-	-v /etc/timezone:/etc/timezone:ro \
-	--net=host \
-        --rm \
-        --name $CONTAINER_NAME \
-        $IMAGE_NAME sleep infinity
-    docker exec $CONTAINER_NAME apt update 2>&1 > /dev/null
-    docker exec $CONTAINER_NAME apt install -y ffmpeg 2>&1 > /dev/null
     echo "starting $CONTAINER_NAME"
-    docker exec -$ATTACH_OPTION $CONTAINER_NAME $COMMAND
-    echo "done"
+    docker run \
+    -$ATTACH_OPTION \
+    -e USER_ID=$(id -u) \
+    -e GROUP_ID=$(id -g) \
+    -e OPENHAB_HTTP_PORT=$PORT \
+    -e OPENHAB_HTTPS_PORT=$(expr $PORT + 1) \
+    -v $(pwd)/addons:/openhab/addons \
+    -v $(pwd)/conf:/openhab/conf \
+    -v $(pwd)/userdata:/openhab/userdata \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /etc/timezone:/etc/timezone:ro \
+    --net=host \
+    --rm \
+    --name $CONTAINER_NAME \
+    $IMAGE_NAME $COMMAND
 }
 
 function set_start_options(){
-    while getopts dhop: OPT; do
+    while getopts adhop: OPT; do
         case $OPT in
             a)
                 ATTACH_OPTION=it
