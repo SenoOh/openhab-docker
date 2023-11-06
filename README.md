@@ -9,7 +9,7 @@ $ git clone https://github.com/miyake13000/openhab-docker.git
 ```
 2. コンテナイメージ作成
 ```bash
-$ docker build -t openhab:3.3.0-custom openhab-docker
+$ docker build -t openhab:4.0.3-custom openhab-docker
 ```
 
 ### openHAB の管理

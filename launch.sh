@@ -9,7 +9,7 @@ DEFAULT_PORT=8080 # host port which container binds
 DEFAULT_COMMAND="" # command which execute in container
 
 # constant value
-IMAGE_NAME=openhab:3.3.0-custom
+IMAGE_NAME=openhab:4.0.3-custom
 CONTAINER_NAME=openhab
 SCRIPT_NAME=launch.sh
 
